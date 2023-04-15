@@ -4,41 +4,20 @@ import { TiSocialFlickr } from "react-icons/ti";
 import VideoModal from "../Modals/VideoModal";
 import LinkModal from "../Modals/LinkModal";
 import PictureModal from "../Modals/PictureModal";
+import { handleImage, handleSaveVideoUrl } from "../utils/functionExports";
 
-function Editor() {
+const Editor = () => {
   const [showDropdown, setShowDropDown] = useState(false);
   const [showModal, setShowModal] = useState({
     picture: false,
     video: false,
     link: false,
   });
-
-  const [value, setValue] = useState("");
-  // const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
   const [selectedImage, setSelectedImage] = useState<string>("");
-
   const [videoLink, setVideoLink] = useState("");
   const [link, setLink] = useState("");
-
   const contentEditableRef = useRef<HTMLDivElement>(null);
-
-
-  const handleImage = useCallback(() => {
-    const contentEditable = contentEditableRef.current;
-    if (contentEditable) {
-      const selection = window.getSelection();
-      const range = document.createRange();
-      range.setStart(contentEditable, contentEditable.childNodes.length);
-      range.collapse(true);
-      selection?.removeAllRanges();
-      selection?.addRange(range);
-      const imgHtml = `<img src="${selectedImage}" />`;
-      document.execCommand("insertHTML", false, imgHtml);
-    }
-  }, [selectedImage]);
-
-  const handleInsertVideo = () => {};
+  const videoLinkRef = useRef(null || "");
 
   const handleInsertLink = () => {};
 
@@ -56,7 +35,14 @@ function Editor() {
           placeholder="Add Content"
           ref={contentEditableRef}
           contentEditable
+          id="editor"
         ></div>
+        {/* <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/3WbD75qQCkQ"
+        ></iframe> */}
+
         <div
           onClick={() => {
             setShowDropDown(!showDropdown);
@@ -119,14 +105,16 @@ function Editor() {
         {showModal.picture ? (
           <PictureModal
             setSelectedImage={setSelectedImage}
-            handleInsertImage={handleImage}
+            handleInsertImage={() =>
+              handleImage(contentEditableRef.current, selectedImage)
+            }
             hideModal={() => setShowModal({ ...showModal, picture: false })}
           />
         ) : null}
         {showModal.video ? (
           <VideoModal
             setVideoUrl={setVideoLink}
-            handleInsertLink={handleInsertVideo}
+            handleInsertLink={() => handleSaveVideoUrl(videoLink)}
             hideModal={() => setShowModal({ ...showModal, video: false })}
           />
         ) : null}
@@ -141,6 +129,6 @@ function Editor() {
       </div>
     </div>
   );
-}
+};
 
 export default Editor;
