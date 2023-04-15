@@ -114,7 +114,7 @@ const Editor = () => {
         {showModal.video ? (
           <VideoModal
             setVideoUrl={setVideoLink}
-            handleInsertLink={() => handleSaveVideoUrl(videoLink)}
+            handleInsertLink={() => handleSaveVideoUrl(videoLink,()=>setVideoLink(''))}
             hideModal={() => setShowModal({ ...showModal, video: false })}
           />
         ) : null}

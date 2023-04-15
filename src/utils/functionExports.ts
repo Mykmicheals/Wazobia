@@ -1,4 +1,3 @@
-
 export const handleImage = (
   ref: any,
   selectedImage: string,
@@ -23,14 +22,16 @@ export const handleImage = (
     img.onload = () => {
       const imgHtml = `<img src="${selectedImage}" />`;
       document.execCommand("insertHTML", false, imgHtml);
-      setSelectedImage(""); 
+      setSelectedImage("");
     };
     img.src = selectedImage;
   }
 };
 
-
-export const handleSaveVideoUrl = (videoLink: string) => {
+export const handleSaveVideoUrl = (
+  videoLink: string,
+  setVideoLink: (videoLink: string) => void
+) => {
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
   if (urlRegex.test(videoLink.trim())) {
     const url = new URL(videoLink);
@@ -38,6 +39,7 @@ export const handleSaveVideoUrl = (videoLink: string) => {
     const iframe = document.createElement("iframe");
     iframe.src = `https://www.youtube.com/embed/${videoId}`;
     document?.getElementById("editor")?.appendChild(iframe);
+    setVideoLink("");
   } else {
     alert("Invalid video url");
   }
