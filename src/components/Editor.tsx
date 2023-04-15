@@ -18,18 +18,22 @@ const Editor = () => {
   const [link, setLink] = useState("");
   const contentEditableRef = useRef<HTMLDivElement>(null);
 
-  
   const handleInsertLink = () => {};
 
   return (
     <div className="border h-screen overflow-hidden overflow-y-scroll border-gray-300 mx-10 lg:mx-80 md:mx-20 my-20">
       <input
-        className=" w-full px-4 py-2 text-gray-700 text-2xl font-bold placeholder-gray-600"
+        className="w-full border-b px-4 py-2 text-gray-700 text-2xl font-bold placeholder-gray-600"
         type="text"
         placeholder="Add a post title"
         autoFocus
       />
-      <div className="cursor-text  pl-4 py-4 w-full">
+      <div className="mx-4 my-4 flex flex-row gap-4">
+        <p>Paragraph</p>
+        <p className="font-bold">B</p>
+        <p className="italic font-bold">I</p>
+      </div>
+      <div className="pl-4 py-4 w-full">
         <div
           className="py-10 focus:outline-none"
           placeholder="Add Content"
@@ -100,7 +104,9 @@ const Editor = () => {
           <PictureModal
             setSelectedImage={setSelectedImage}
             handleInsertImage={() =>
-              handleImage(contentEditableRef.current, selectedImage)
+              handleImage(contentEditableRef.current, selectedImage, () =>
+                setSelectedImage("")
+              )
             }
             hideModal={() => setShowModal({ ...showModal, picture: false })}
           />

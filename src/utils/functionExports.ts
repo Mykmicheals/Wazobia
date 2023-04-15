@@ -1,4 +1,9 @@
-export const handleImage = (ref: any, selectedImage: string) => {
+
+export const handleImage = (
+  ref: any,
+  selectedImage: string,
+  setSelectedImage: (image: string) => void
+) => {
   const contentEditable = ref;
   if (contentEditable) {
     const selection = window.getSelection();
@@ -18,10 +23,12 @@ export const handleImage = (ref: any, selectedImage: string) => {
     img.onload = () => {
       const imgHtml = `<img src="${selectedImage}" />`;
       document.execCommand("insertHTML", false, imgHtml);
+      setSelectedImage(""); 
     };
     img.src = selectedImage;
   }
 };
+
 
 export const handleSaveVideoUrl = (videoLink: string) => {
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
