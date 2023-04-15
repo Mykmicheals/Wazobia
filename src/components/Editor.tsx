@@ -17,8 +17,8 @@ const Editor = () => {
   const [videoLink, setVideoLink] = useState("");
   const [link, setLink] = useState("");
   const contentEditableRef = useRef<HTMLDivElement>(null);
-  const videoLinkRef = useRef(null || "");
 
+  
   const handleInsertLink = () => {};
 
   return (
@@ -37,12 +37,6 @@ const Editor = () => {
           contentEditable
           id="editor"
         ></div>
-        {/* <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/3WbD75qQCkQ"
-        ></iframe> */}
-
         <div
           onClick={() => {
             setShowDropDown(!showDropdown);
