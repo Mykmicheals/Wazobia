@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { AiFillPicture, AiFillVideoCamera } from "react-icons/ai";
 import { TiSocialFlickr } from "react-icons/ti";
+import VideoModal from "../Modals/VideoModal";
+import LinkModal from "../Modals/LinkModal";
+import PictureModal from "../Modals/PictureModal";
 
 function Editor() {
   const [showDropdown, setShowDropDown] = useState(false);
@@ -10,6 +13,35 @@ function Editor() {
     link: false,
   });
 
+  const [value, setValue] = useState("");
+  // const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+  const [selectedImage, setSelectedImage] = useState<string>("");
+
+  const [videoLink, setVideoLink] = useState("");
+  const [link, setLink] = useState("");
+
+  const contentEditableRef = useRef<HTMLDivElement>(null);
+
+
+  const handleImage = useCallback(() => {
+    const contentEditable = contentEditableRef.current;
+    if (contentEditable) {
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.setStart(contentEditable, contentEditable.childNodes.length);
+      range.collapse(true);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+      const imgHtml = `<img src="${selectedImage}" />`;
+      document.execCommand("insertHTML", false, imgHtml);
+    }
+  }, [selectedImage]);
+
+  const handleInsertVideo = () => {};
+
+  const handleInsertLink = () => {};
+
   return (
     <div className="border h-screen overflow-hidden overflow-y-scroll border-gray-300 mx-10 lg:mx-80 md:mx-20 my-20">
       <input
@@ -18,8 +50,13 @@ function Editor() {
         placeholder="Add a post title"
         autoFocus
       />
-      <div className="cursor-text pl-4 py-4 w-full">
-        <div className="" placeholder="Add Content" contentEditable></div>
+      <div className="cursor-text  pl-4 py-4 w-full">
+        <div
+          className="py-10 focus:outline-none"
+          placeholder="Add Content"
+          ref={contentEditableRef}
+          contentEditable
+        ></div>
         <div
           onClick={() => {
             setShowDropDown(!showDropdown);
@@ -77,6 +114,31 @@ function Editor() {
           </div>
         </>
       ) : null}
+
+      <div>
+        {showModal.picture ? (
+          <PictureModal
+            setSelectedImage={setSelectedImage}
+            handleInsertImage={handleImage}
+            hideModal={() => setShowModal({ ...showModal, picture: false })}
+          />
+        ) : null}
+        {showModal.video ? (
+          <VideoModal
+            setVideoUrl={setVideoLink}
+            handleInsertLink={handleInsertVideo}
+            hideModal={() => setShowModal({ ...showModal, video: false })}
+          />
+        ) : null}
+
+        {showModal.link ? (
+          <LinkModal
+            setVideoUrl={setVideoLink}
+            handleInsertLink={handleInsertLink}
+            hideModal={() => setShowModal({ ...showModal, link: false })}
+          />
+        ) : null}
+      </div>
     </div>
   );
 }
