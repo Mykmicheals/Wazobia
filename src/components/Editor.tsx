@@ -1,10 +1,22 @@
-import React, { useState, useCallback, useRef } from "react";
+import { useState, useRef } from "react";
 import { AiFillPicture, AiFillVideoCamera } from "react-icons/ai";
 import { TiSocialFlickr } from "react-icons/ti";
+
 import VideoModal from "../Modals/VideoModal";
 import LinkModal from "../Modals/LinkModal";
 import PictureModal from "../Modals/PictureModal";
 import { handleImage, handleSaveVideoUrl } from "../utils/functionExports";
+import {
+  circleBtn,
+  circlePlus,
+  dropDown,
+  editorConfig,
+  editorInner,
+  editorInput,
+  editorTop,
+  modal1,
+} from "../utils/styles";
+import EditorConfig from "./EditorConfig";
 
 const Editor = () => {
   const [showDropdown, setShowDropDown] = useState(false);
@@ -21,21 +33,17 @@ const Editor = () => {
   const handleInsertLink = () => {};
 
   return (
-    <div className="border h-screen overflow-hidden overflow-y-scroll border-gray-300 mx-10 lg:mx-80 md:mx-20 my-20">
+    <div className={editorTop}>
       <input
-        className="w-full border-b px-4 py-2 text-gray-700 text-2xl font-bold placeholder-gray-600"
+        className={editorInput}
         type="text"
         placeholder="Add a post title"
         autoFocus
       />
-      <div className="mx-4 my-4 flex flex-row gap-4">
-        <p>Paragraph</p>
-        <p className="font-bold">B</p>
-        <p className="italic font-bold">I</p>
-      </div>
+      <EditorConfig />
       <div className="pl-4 py-4 w-full">
         <div
-          className="py-10 focus:outline-none"
+          className={editorInner}
           placeholder="Add Content"
           ref={contentEditableRef}
           contentEditable
@@ -45,25 +53,22 @@ const Editor = () => {
           onClick={() => {
             setShowDropDown(!showDropdown);
           }}
-          className="cursor-pointer bg-gray-300 rounded-full w-8 h-8 flex my-6 justify-center items-center mt-5"
+          className={circleBtn}
         >
-          <span className="text-gray-700 align-center">+</span>
+          <span className={circlePlus}>+</span>
         </div>
       </div>
 
       {showDropdown ? (
         <>
-          <div
-            id="embeds"
-            className="shadow-lg w-2/4 overflow md:w-1/4 px-2 py-4"
-          >
+          <div id="embeds" className={dropDown}>
             <h4>Embeds</h4>
             <div
               onClick={() => {
                 setShowModal({ ...showModal, picture: true });
                 setShowDropDown(false);
               }}
-              className="cursor-pointer flex gap-3 mt-5"
+              className={modal1}
             >
               <AiFillPicture className="my-1" />
               <div>
@@ -76,7 +81,7 @@ const Editor = () => {
                 setShowModal({ ...showModal, video: true });
                 setShowDropDown(false);
               }}
-              className="cursor-pointer flex gap-3 mt-5"
+              className={modal1}
             >
               <AiFillVideoCamera className="my-1" />
               <div>
@@ -87,7 +92,7 @@ const Editor = () => {
 
             <div
               onClick={() => setShowModal({ ...showModal, link: true })}
-              className="cursor-pointer flex gap-3 mt-5"
+              className={modal1}
             >
               <TiSocialFlickr className="my-1" />
               <div>
@@ -114,7 +119,9 @@ const Editor = () => {
         {showModal.video ? (
           <VideoModal
             setVideoUrl={setVideoLink}
-            handleInsertLink={() => handleSaveVideoUrl(videoLink,()=>setVideoLink(''))}
+            handleInsertLink={() =>
+              handleSaveVideoUrl(videoLink, () => setVideoLink(""))
+            }
             hideModal={() => setShowModal({ ...showModal, video: false })}
           />
         ) : null}
