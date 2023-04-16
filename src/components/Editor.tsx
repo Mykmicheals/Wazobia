@@ -1,21 +1,11 @@
 import { useState, useRef } from "react";
-
 import VideoModal from "../Modals/VideoModal";
 import LinkModal from "../Modals/LinkModal";
 import PictureModal from "../Modals/PictureModal";
 import { handleImage, handleSaveVideoUrl } from "../utils/functionExports";
-import {
-  circleBtn,
-  circlePlus,
-  dropDown,
-  editorConfig,
-  editorInner,
-  editorInput,
-  editorTop,
-  modal1,
-} from "../utils/styles";
-import EditorConfig from "./EditorConfig";
+import { editorTop } from "../utils/styles";
 import EditorDropdown from "./EditorDropdown";
+import EditorContainer from "./EditorContainer";
 
 const Editor = () => {
   const [showDropdown, setShowDropDown] = useState(false);
@@ -33,30 +23,10 @@ const Editor = () => {
 
   return (
     <div className={editorTop}>
-      <input
-        className={editorInput}
-        type="text"
-        placeholder="Add a post title"
-        autoFocus
+      <EditorContainer
+        setShowDropDown={setShowDropDown}
+        showDropdown={showDropdown}
       />
-      <EditorConfig />
-      <div className="pl-4 py-4 w-full">
-        <div
-          className={editorInner}
-          placeholder="Add Content"
-          ref={contentEditableRef}
-          contentEditable
-          id="editor"
-        ></div>
-        <div
-          onClick={() => {
-            setShowDropDown(!showDropdown);
-          }}
-          className={circleBtn}
-        >
-          <span className={circlePlus}>+</span>
-        </div>
-      </div>
 
       {showDropdown ? (
         <EditorDropdown
