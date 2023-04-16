@@ -1,7 +1,12 @@
 import React from "react";
+import Editor from "./Editor";
 
-function HomeScreen() {
-  return <div>HomeScreen</div>;
-}
+const HomeScreen = () => {
+  return (
+    <>
+      <Editor />
+    </>
+  );
+};
 
 export default HomeScreen;
