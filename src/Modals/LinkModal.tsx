@@ -1,5 +1,7 @@
 import React, { useState, ReactNode } from "react";
 import ModalContainer from "./ModalContainer";
+import Switch from "react-switch";
+
 
 interface PictureModalProps {
   hideModal: () => void;
@@ -43,11 +45,11 @@ function LinkModal({
       />
       <div className="flex gap-32 md:gap-80 my-5 relative">
         <p>Disable caption</p>
-        {/* <Switch
+        <Switch
           className="text-sm h-5 w-5 sm:left-24 md:left-48"
           onChange={() => setSwitch(!switchOn)}
           checked={switchOn}
-        /> */}
+        />
       </div>
     </ModalContainer>
   );

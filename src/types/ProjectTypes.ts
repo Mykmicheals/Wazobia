@@ -24,3 +24,9 @@ export interface EditorModalsProps {
 }
 
 export interface EditorContainer {}
+
+export interface PictureModalProps {
+  hideModal: () => void;
+  handleInsertImage: () => void;
+  setSelectedImage: any;
+}

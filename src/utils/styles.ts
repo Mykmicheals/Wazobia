@@ -2,7 +2,7 @@
 
 
 export const editorTop =
-  "border w-2/4 h-screen overflow-hidden overflow-y-scroll border-gray-300 mx-10 lg:mx-80 md:mx-20 my-20";
+  "border h-screen overflow-hidden overflow-y-scroll border-gray-300 mx-10 lg:mx-80 md:mx-20 my-20";
 
 export const editorInput =
   "w-full border-b px-4 py-2 text-gray-700 text-2xl font-bold placeholder-gray-600";

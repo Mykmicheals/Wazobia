@@ -1,17 +1,12 @@
 import React, { useState } from "react";
+import { PictureModalProps } from "../types/ProjectTypes";
 import ModalContainer from "./ModalContainer";
 
-interface PictureModalProps {
-  hideModal: () => void;
-  handleInsertImage: ()=>void;
-  setSelectedImage: any;
-}
-
-function PictureModal({
+const PictureModal = ({
   hideModal,
   setSelectedImage,
   handleInsertImage,
-}: PictureModalProps) {
+}: PictureModalProps) => {
   const [fileName, setFile] = useState("");
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +47,7 @@ function PictureModal({
       </div>
     </ModalContainer>
   );
-}
+};
 
 export default PictureModal;
 

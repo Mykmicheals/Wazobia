@@ -10,7 +10,6 @@ import {
   editorInput,
 } from "../utils/styles";
 import EditorConfig from "./EditorConfig";
-import BtnGreen from "./BtnGreen";
 
 const Editor = () => {
   const [showDropdown, setShowDropDown] = useState(false);
@@ -22,7 +21,6 @@ const Editor = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [videoLink, setVideoLink] = useState("");
   const [link, setLink] = useState("");
-
   const contentEditableRef = useRef<HTMLDivElement>(null);
   const handleInsertLink = () => {};
 

@@ -3,7 +3,6 @@ import LinkModal from "../Modals/LinkModal";
 import PictureModal from "../Modals/PictureModal";
 import VideoModal from "../Modals/VideoModal";
 import { EditorModalsProps } from "../types/ProjectTypes";
-import { handleImage } from "../utils/functionExports";
 
 const EditorModals = ({
   showModal,

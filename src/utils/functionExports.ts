@@ -1,4 +1,3 @@
-import { RefObject } from "react";
 export const handleImage = (
   ref: any,
   selectedImage: string,
@@ -63,3 +62,23 @@ export const handleInsertBullet = (ref: any) => {
     range?.insertNode(bullet);
   }
 };
+
+
+
+
+  const handleInsertText = (
+    ref: any,
+    selectText: string,
+    setSelectedText: (text: string) => void
+  ) => {
+    const contentEditable = ref;
+    if (contentEditable) {
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.setStart(contentEditable, contentEditable.childNodes.length);
+      range.collapse(true);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+      document.execCommand("insertText", false, selectText);
+    }
+  };
