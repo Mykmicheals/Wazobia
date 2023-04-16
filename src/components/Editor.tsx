@@ -6,6 +6,15 @@ import { handleImage, handleSaveVideoUrl } from "../utils/functionExports";
 import { editorTop } from "../utils/styles";
 import EditorDropdown from "./EditorDropdown";
 import EditorContainer from "./EditorContainer";
+import EditorModals from "./EditorModals";
+// import EditorModals from "./EditorModals";
+import {
+  circleBtn,
+  circlePlus,
+  editorInner,
+  editorInput,
+} from "../utils/styles";
+import EditorConfig from "./EditorConfig";
 
 const Editor = () => {
   const [showDropdown, setShowDropDown] = useState(false);
@@ -14,19 +23,40 @@ const Editor = () => {
     video: false,
     link: false,
   });
-  const [selectedImage, setSelectedImage] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState("");
   const [videoLink, setVideoLink] = useState("");
   const [link, setLink] = useState("");
   const contentEditableRef = useRef<HTMLDivElement>(null);
-
   const handleInsertLink = () => {};
 
   return (
     <div className={editorTop}>
-      <EditorContainer
-        setShowDropDown={setShowDropDown}
-        showDropdown={showDropdown}
-      />
+      <div>
+        <input
+          className={editorInput}
+          type="text"
+          placeholder="Add a post title"
+          autoFocus
+        />
+        <EditorConfig />
+        <div className="pl-4 py-4 w-full">
+          <div
+            className={editorInner}
+            placeholder="Add Content"
+            ref={contentEditableRef}
+            contentEditable
+            id="editor"
+          ></div>
+          <div
+            onClick={() => {
+              setShowDropDown(!showDropdown);
+            }}
+            className={circleBtn}
+          >
+            <span className={circlePlus}>+</span>
+          </div>
+        </div>
+      </div>
 
       {showDropdown ? (
         <EditorDropdown
@@ -36,36 +66,21 @@ const Editor = () => {
         />
       ) : null}
 
-      <div>
-        {showModal.picture ? (
-          <PictureModal
-            setSelectedImage={setSelectedImage}
-            handleInsertImage={() =>
-              handleImage(contentEditableRef.current, selectedImage, () =>
-                setSelectedImage("")
-              )
-            }
-            hideModal={() => setShowModal({ ...showModal, picture: false })}
-          />
-        ) : null}
-        {showModal.video ? (
-          <VideoModal
-            setVideoUrl={setVideoLink}
-            handleInsertLink={() =>
-              handleSaveVideoUrl(videoLink, () => setVideoLink(""))
-            }
-            hideModal={() => setShowModal({ ...showModal, video: false })}
-          />
-        ) : null}
-
-        {showModal.link ? (
-          <LinkModal
-            setVideoUrl={setVideoLink}
-            handleInsertLink={handleInsertLink}
-            hideModal={() => setShowModal({ ...showModal, link: false })}
-          />
-        ) : null}
-      </div>
+      <EditorModals
+        showModal={showModal}
+        selectedImage={selectedImage}
+        setSelectedImage={setSelectedImage}
+        setShowModal={setShowModal}
+        handleInsertLink={handleInsertLink}
+        setVideoLink={setVideoLink}
+        handleSaveVideoUrl={handleSaveVideoUrl}
+        videoLink={videoLink}
+        handleInsertImage={() =>
+          handleImage(contentEditableRef.current, selectedImage, () =>
+            setSelectedImage("")
+          )
+        }
+      />
     </div>
   );
 };
