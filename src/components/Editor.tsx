@@ -1,13 +1,8 @@
 import { useState, useRef } from "react";
-import VideoModal from "../Modals/VideoModal";
-import LinkModal from "../Modals/LinkModal";
-import PictureModal from "../Modals/PictureModal";
 import { handleImage, handleSaveVideoUrl } from "../utils/functionExports";
 import { editorTop } from "../utils/styles";
 import EditorDropdown from "./EditorDropdown";
-import EditorContainer from "./EditorContainer";
 import EditorModals from "./EditorModals";
-// import EditorModals from "./EditorModals";
 import {
   circleBtn,
   circlePlus,
@@ -15,6 +10,7 @@ import {
   editorInput,
 } from "../utils/styles";
 import EditorConfig from "./EditorConfig";
+import BtnGreen from "./BtnGreen";
 
 const Editor = () => {
   const [showDropdown, setShowDropDown] = useState(false);
@@ -26,61 +22,64 @@ const Editor = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [videoLink, setVideoLink] = useState("");
   const [link, setLink] = useState("");
+
   const contentEditableRef = useRef<HTMLDivElement>(null);
   const handleInsertLink = () => {};
 
   return (
-    <div className={editorTop}>
-      <div>
-        <input
-          className={editorInput}
-          type="text"
-          placeholder="Add a post title"
-          autoFocus
-        />
-        <EditorConfig />
-        <div className="pl-4 py-4 w-full">
-          <div
-            className={editorInner}
-            placeholder="Add Content"
-            ref={contentEditableRef}
-            contentEditable
-            id="editor"
-          ></div>
-          <div
-            onClick={() => {
-              setShowDropDown(!showDropdown);
-            }}
-            className={circleBtn}
-          >
-            <span className={circlePlus}>+</span>
+    <div>
+      <div className={editorTop}>
+        <div>
+          <input
+            className={editorInput}
+            type="text"
+            placeholder="Add a post title"
+            autoFocus
+          />
+          <EditorConfig />
+          <div className="pl-4 py-1 w-full">
+            <div
+              className={editorInner}
+              placeholder="Add Content"
+              ref={contentEditableRef}
+              contentEditable
+              id="editor"
+            ></div>
+            <div
+              onClick={() => {
+                setShowDropDown(!showDropdown);
+              }}
+              className={circleBtn}
+            >
+              <span className={circlePlus}>+</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {showDropdown ? (
-        <EditorDropdown
-          setShowModal={setShowModal}
-          setShowDropDown={setShowDropDown}
+        {showDropdown ? (
+          <EditorDropdown
+            setShowModal={setShowModal}
+            setShowDropDown={setShowDropDown}
+            showModal={showModal}
+          />
+        ) : null}
+
+        <EditorModals
           showModal={showModal}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+          setShowModal={setShowModal}
+          handleInsertLink={handleInsertLink}
+          setVideoLink={setVideoLink}
+          handleSaveVideoUrl={handleSaveVideoUrl}
+          videoLink={videoLink}
+          handleInsertImage={() =>
+            handleImage(contentEditableRef.current, selectedImage, () =>
+              setSelectedImage("")
+            )
+          }
         />
-      ) : null}
-
-      <EditorModals
-        showModal={showModal}
-        selectedImage={selectedImage}
-        setSelectedImage={setSelectedImage}
-        setShowModal={setShowModal}
-        handleInsertLink={handleInsertLink}
-        setVideoLink={setVideoLink}
-        handleSaveVideoUrl={handleSaveVideoUrl}
-        videoLink={videoLink}
-        handleInsertImage={() =>
-          handleImage(contentEditableRef.current, selectedImage, () =>
-            setSelectedImage("")
-          )
-        }
-      />
+      </div>
     </div>
   );
 };

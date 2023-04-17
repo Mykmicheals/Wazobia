@@ -13,6 +13,7 @@ import {
 } from "react-icons/bs";
 import { MdFormatListBulleted } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { handleBold } from "../utils/functionExports";
 
 const EditorConfig = () => {
   return (
@@ -22,12 +23,12 @@ const EditorConfig = () => {
         <RiArrowDropDownLine />
         <BsFillImageFill />
         <BsLink45Deg />
-        <BsTypeBold />
+        <BsTypeBold onClick={handleBold} />
         <BsTypeItalic />
         <AiOutlineAlignLeft />
         <AiOutlineAlignCenter />
         <AiOutlineAlignRight />
-        <MdFormatListBulleted />
+        <MdFormatListBulleted  />
       </div>
     </div>
   );

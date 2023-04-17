@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 export const handleImage = (
   ref: any,
   selectedImage: string,
@@ -39,8 +40,26 @@ export const handleSaveVideoUrl = (
     const iframe = document.createElement("iframe");
     iframe.src = `https://www.youtube.com/embed/${videoId}`;
     document?.getElementById("editor")?.appendChild(iframe);
+
     setVideoLink("");
   } else {
     alert("Invalid video url");
+  }
+};
+
+export const handleBold = () => {
+  document.execCommand("bold", false, undefined);
+  console.log("working");
+};
+
+export const handleInsertBullet = (ref: any) => {
+  const contentEditable = ref;
+  if (contentEditable) {
+    const selection = window.getSelection();
+    const range = selection?.getRangeAt(0);
+    const bullet = document.createElement("li");
+    const textNode = document.createTextNode(" ");
+    bullet.appendChild(textNode);
+    range?.insertNode(bullet);
   }
 };
