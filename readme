@@ -1,0 +1,134 @@
+
+### Project Demo
+
+- This Project was built with react and typescript
+
+- The project was deployed on vercel. click the [Link](https://wazobia-teal.vercel.app/) to see the Demo
+
+
+### To run the project
+
+make sure you have nodejs running on your machine
+
+- clone from the repo using the command
+
+` git clone https://github.com/Mykmicheals/wazobia.git `
+
+- Change directory using 
+
+` cd wazobia `
+
+- install all necessary dependecies using the command
+
+ ` npm install -f `
+ 
+ 
+ ### The UI
+ 
+ ### Entry Screen
+ 
+ ![entryPage](https://user-images.githubusercontent.com/88559940/226302438-c37fd682-6568-4752-8788-34dbb90dcfba.png)
+ 
+ ### Image Modal
+ 
+![imageModal](https://user-images.githubusercontent.com/88559940/226302567-c668aa61-90ea-45d9-b33e-8d2212a6ca2c.png)
+
+
+### video Modal
+
+![videoModal](https://user-images.githubusercontent.com/88559940/226302699-d39c6f06-8687-45e7-9bd3-d99104b70c43.png)
+
+### Entry file
+
+
+```
+
+import HomePage from "./Pages/HomePage";
+
+function App() {
+
+
+  return (
+    <div className="App">
+      <Editor />
+    </div>
+  );
+}
+
+export default App;
+
+```
+This is the app.tsx file in the src folder containing our Editor component
+
+- The Editor component contains all necessary logic and modals for the app
+
+### Functions
+
+```
+
+export const handleImage = (
+  ref: any,
+  selectedImage: string,
+  setSelectedImage: (image: string) => void
+) => {
+  const contentEditable = ref;
+  if (contentEditable) {
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.setStart(contentEditable, contentEditable.childNodes.length);
+    range.collapse(true);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+    if (!selectedImage) {
+      alert("Please select an image to insert");
+      return;
+    }
+    const img = new Image();
+    img.onerror = () => {
+      alert("The selected file is not an image");
+    };
+    img.onload = () => {
+      const imgHtml = `<img src="${selectedImage}" />`;
+      document.execCommand("insertHTML", false, imgHtml);
+      setSelectedImage("");
+    };
+    img.src = selectedImage;
+  }
+};
+
+
+```
+
+the function above inserts the Image into the text editor. 
+
+
+### Insert Video Function
+
+```
+
+export const handleSaveVideoUrl = (
+  videoLink: string,
+  setVideoLink: (videoLink: string) => void
+) => {
+  const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+  if (urlRegex.test(videoLink.trim())) {
+    const url = new URL(videoLink);
+    const videoId = url.searchParams.get("v");
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+    document?.getElementById("editor")?.appendChild(iframe);
+
+    setVideoLink("");
+  } else {
+    alert("Invalid video url");
+  }
+};
+  
+```
+
+The insert video function is very similar to the insert image function, just that you embed a video instead
+
+
+### Dependencies
+
+- React-icons - This was used for various icons in the project
